@@ -6,29 +6,22 @@ namespace Workshop_1
 {
 	public class TaskModel
 	{
-		string _discription;
-		DateTime _taskStart;
-		DateTime _taskEnd;
-		Nullable<bool> _isTaskImportawnt;
-		Nullable<bool> _isTaskFullDay;
+		public string _discription;
+		public DateTime _taskStart;
+		public DateTime _taskEnd;
+		public bool _isTaskImportant;
+		public bool _isTaskFullDay;
 
-
-		List<string[]> taskModel = new List<string[]>();
-
-		public TaskModel(string discription, DateTime taskStart, DateTime taskEnd, Nullable<bool> isTaskImportant, Nullable<bool> isTaskFullDay)
+		public TaskModel(string discription, DateTime taskStart, DateTime taskEnd, bool isTaskImportant, bool isTaskFullDay)
 		{
 			_discription = discription;
 			_taskStart = taskStart;
 			_taskEnd = taskEnd;
-			_isTaskImportawnt = isTaskImportant;
+			_isTaskImportant = isTaskImportant;
 			_isTaskFullDay = isTaskFullDay;
 		}
-
-		public void AddTask()
-		{
-			
-		}
 	}
+	
 }
 
 
