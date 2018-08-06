@@ -12,7 +12,7 @@ namespace Workshop_1
 		static void Main(string[] args)
 		{
 			var mainMenu = new MainManu();
-			var taskModel = new TaskModel("",DateTime.Now,DateTime.MaxValue, false, false);
+			var taskModel = new TaskModel("", DateTime.Now, DateTime.MaxValue, false, false);
 
 			string Task = "";
 
@@ -20,27 +20,43 @@ namespace Workshop_1
 			{
 				mainMenu.showMenu();
 				Task = Console.ReadLine().ToUpper();
-
-				if (Task == "ADD")
+				if ((Task == "ADD") || (Task == "SHOW") || (Task == "REMOVE") || (Task == "SAVE") || (Task == "LOAD"))
 				{
-					taskModel.AddTask();
-				}
+					if (Task == "ADD")
+					{
+						taskModel.AddTask();
+					}
 
-				if (Task == "REMOVE")
+					if (Task == "SHOW")
+					{
+						taskModel.ShowTask();
+					}
+
+					if (Task == "REMOVE")
+					{
+						taskModel.RemoveTask();
+					}
+
+					if (Task == "SAVE")
+					{
+						taskModel.SaveFile();
+					}
+
+					if (Task == "LOAD")
+					{
+						taskModel.LoadFile();
+					}
+
+					mainMenu.backToMenu();
+				}
+				else
 				{
-					taskModel.RemoveTask();
+					if (Task != "EXIT")
+					{
+						ConsoleEx.WriteLine("Niepoprawne polecenie", ConsoleColor.Red);
+						mainMenu.backToMenu();
+					}
 				}
-
-				if (Task == "SAVE")
-				{
-					taskModel.SaveFile();
-				}
-
-				if (Task == "LOAD")
-				{
-					taskModel.LoadFile();
-				}
-
 			} while (Task != "EXIT");
 		}
 	}

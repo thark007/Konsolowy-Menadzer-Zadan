@@ -4,26 +4,28 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 
-namespace Workshop_1 
+namespace Workshop_1
 {
 	public class TaskModel
 	{
 		public List<string> taskModelList = new List<string>();
+		string path = @"C:\Users\Dorota\Documents\GitHub\Warsztat_1\1_Workshop\Konsolowy-Menadzer-Zadan\Workshop_1\Tasks.csv";
 
-		public string _discription;
-		public DateTime _taskStart;
-		public DateTime _taskEnd;
-		public bool _isTaskImportant;
-		public bool _isTaskFullDay;
+		public string description;
+		public DateTime taskStart;
+		public DateTime taskEnd;
+		public bool isTaskImportant;
+		public bool isTaskFullDay;
 
-		public TaskModel(string discription, DateTime taskStart, DateTime taskEnd, bool isTaskImportant, bool isTaskFullDay)
+		public TaskModel(string description, DateTime taskStart, DateTime taskEnd, bool isTaskImportant, bool isTaskFullDay)
 		{
-			_discription = discription;
-			_taskStart = taskStart;
-			_taskEnd = taskEnd;
-			_isTaskImportant = isTaskImportant;
-			_isTaskFullDay = isTaskFullDay;
+			this.description = description;
+			this.taskStart = taskStart;
+			this.taskEnd = taskEnd;
+			this.isTaskImportant = isTaskImportant;
+			this.isTaskFullDay = isTaskFullDay;
 		}
+
 		public void AddTask()
 		{
 			Console.WriteLine("Wpisz opis zadania");
@@ -42,7 +44,8 @@ namespace Workshop_1
 				}
 				catch (FormatException exception)
 				{
-					Console.WriteLine("zły format daty, wpisz w formacie dd-mm-yyyy");
+					ConsoleEx.WriteLine("zły format daty, wpisz w formacie dd-mm-yyyy", ConsoleColor.Red);
+					Console.WriteLine(exception.Message);
 				}
 
 			} while (KeepLoop);
@@ -64,6 +67,7 @@ namespace Workshop_1
 					Console.WriteLine(e.Message);
 				}
 			} while (KeepLoop);
+
 			Console.WriteLine("Jeśli zadanie jest ważne wpisz: TAK");
 			string Importance = Console.ReadLine();
 			bool importance = false;
@@ -88,15 +92,10 @@ namespace Workshop_1
 			taskModelList.Add(task);
 			Console.WriteLine(task);
 			ConsoleEx.WriteLine("Zadanie Dodane!", ConsoleColor.Green);
-			Console.WriteLine("Naciśnij dowolny klawisz aby wrócić do Menu");
-			Console.ReadLine();
-			Console.Clear();
-
 		}
-		public void RemoveTask()
+		public void ShowTask()
 		{
 			List<string> list = taskModelList;
-			Console.WriteLine("Wpisz nr zadania, które chcesz usunąć:");
 			int size = taskModelList.Count;
 			if (size == 0)
 			{
@@ -106,25 +105,33 @@ namespace Workshop_1
 			{
 				for (int i = 0; i < list.Count; i++)
 				{
-
-					string _discription = list[i].ToString();
-					string info = $"{i + 1}. {_discription}";
+					string description = list[i].ToString();
+					string info = $"{i + 1}. {description}";
 					Console.WriteLine(info);
 				}
-
-				int position = Convert.ToInt32(Console.ReadLine());
-				taskModelList.RemoveAt(position - 1);
-				Console.Clear();
-				ConsoleEx.WriteLine($"Pozycja nr {position} została usunięta", ConsoleColor.Green);
-				Console.WriteLine("Naciśnij dowolny klawisz aby wrócić do Menu");
-				Console.ReadLine();
-				Console.Clear();
 			}
-
+		}
+		public void RemoveTask()
+		{
+			ShowTask();
+			if (taskModelList.Count > 0)
+			{
+				Console.WriteLine("Wpisz nr zadania, które chcesz usunąć:");
+				try
+				{
+					int position = Convert.ToInt32(Console.ReadLine());
+					taskModelList.RemoveAt(position - 1);
+					Console.Clear();
+					ConsoleEx.WriteLine($"Pozycja nr {position} została usunięta", ConsoleColor.Green);
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e.Message);
+				}
+			}
 		}
 		public void SaveFile()
 		{
-			
 			var csv = new StringBuilder();
 			for (int i = 0; i < taskModelList.Count; i++)
 			{
@@ -133,36 +140,27 @@ namespace Workshop_1
 			}
 			try
 			{
-				string path = @"C:\Users\Dorota\Documents\GitHub\Warsztat_1\1_Workshop\Konsolowy-Menadzer-Zadan\Workshop_1\Tasks.csv";
 				File.AppendAllText(path, $"{csv.ToString()} ");
 				Console.Clear();
 				ConsoleEx.WriteLine("Wszystkie zadania zapisane", ConsoleColor.Green);
-				Console.WriteLine("Naciśnij dowolny klawisz aby wrócić do Menu");
-				Console.ReadLine();
-				Console.Clear();
 			}
 			catch (Exception e)
 			{
 				ConsoleEx.WriteLine(e.Message, ConsoleColor.Red);
 			}
 		}
-
 		public void LoadFile()
 		{
 			List<string> result = new List<string>();
-			string path = @"C:\Users\Dorota\Documents\GitHub\Warsztat_1\1_Workshop\Konsolowy-Menadzer-Zadan\Workshop_1\Tasks.csv";
 			try
 			{
 				string s = File.ReadAllText(path);
-				Console.WriteLine(s);
+				ConsoleEx.WriteLine(s, ConsoleColor.Yellow);
 			}
 			catch (Exception e)
 			{
 				ConsoleEx.WriteLine(e.Message, ConsoleColor.Red);
 			}
 		}
-
 	}
-
 }
-
