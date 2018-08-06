@@ -4,7 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 
-namespace Workshop_1
+namespace Workshop_1 
 {
 	public class TaskModel
 	{
@@ -60,7 +60,7 @@ namespace Workshop_1
 				}
 				catch (FormatException e)
 				{
-					Console.WriteLine("zły format daty, wpisz w formacie dd-mm-yyyy");
+					ConsoleEx.WriteLine("zły format daty, wpisz w formacie dd-mm-yyyy", ConsoleColor.Red);
 					Console.WriteLine(e.Message);
 				}
 			} while (KeepLoop);
@@ -87,7 +87,10 @@ namespace Workshop_1
 			Console.Clear();
 			taskModelList.Add(task);
 			Console.WriteLine(task);
-			Console.WriteLine("Zadanie Dodane!");
+			ConsoleEx.WriteLine("Zadanie Dodane!", ConsoleColor.Green);
+			Console.WriteLine("Naciśnij dowolny klawisz aby wrócić do Menu");
+			Console.ReadLine();
+			Console.Clear();
 
 		}
 		public void RemoveTask()
@@ -97,7 +100,7 @@ namespace Workshop_1
 			int size = taskModelList.Count;
 			if (size == 0)
 			{
-				Console.WriteLine("Nie ma żadnych zadań");
+				ConsoleEx.WriteLine("Nie ma żadnych zadań", ConsoleColor.Red);
 			}
 			else
 			{
@@ -111,7 +114,11 @@ namespace Workshop_1
 
 				int position = Convert.ToInt32(Console.ReadLine());
 				taskModelList.RemoveAt(position - 1);
-				Console.WriteLine($"Pozycja nr {position} została usunięta");
+				Console.Clear();
+				ConsoleEx.WriteLine($"Pozycja nr {position} została usunięta", ConsoleColor.Green);
+				Console.WriteLine("Naciśnij dowolny klawisz aby wrócić do Menu");
+				Console.ReadLine();
+				Console.Clear();
 			}
 
 		}
@@ -128,11 +135,15 @@ namespace Workshop_1
 			{
 				string path = @"C:\Users\Dorota\Documents\GitHub\Warsztat_1\1_Workshop\Konsolowy-Menadzer-Zadan\Workshop_1\Tasks.csv";
 				File.AppendAllText(path, $"{csv.ToString()} ");
-				Console.WriteLine("Wszystkie zadania zapisane");
+				Console.Clear();
+				ConsoleEx.WriteLine("Wszystkie zadania zapisane", ConsoleColor.Green);
+				Console.WriteLine("Naciśnij dowolny klawisz aby wrócić do Menu");
+				Console.ReadLine();
+				Console.Clear();
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e.Message);
+				ConsoleEx.WriteLine(e.Message, ConsoleColor.Red);
 			}
 		}
 
@@ -147,7 +158,7 @@ namespace Workshop_1
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e.Message);
+				ConsoleEx.WriteLine(e.Message, ConsoleColor.Red);
 			}
 		}
 
